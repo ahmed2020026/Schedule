@@ -5,19 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>جدول الدراسة اليومي</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js">  // ── Theme ──
-  function setTheme(name) {
-    document.body.className = 'theme-' + name;
-    LS.set('theme', name);
-    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-    const btn = document.getElementById('th-' + name);
-    if (btn) btn.classList.add('active');
-    if (chartOpen) renderChart();
-  }
-  // load saved theme
-  const savedTheme = LS.get('theme') || 'dark';
-  setTheme(savedTheme);
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root {
     --green: #52b788; --green-light: #74c69d;
@@ -132,84 +120,12 @@
   #resultSub    { font-size:0.95rem; color:#444; margin-bottom:6px; line-height:1.8; }
   #resultScore  { font-size:0.82rem; font-weight:700; color:#999; margin-bottom:26px; }
   #popupCloseBtn { background:#1a3a2a; color:var(--gold-light); border:none; padding:13px 40px; border-radius:50px; font-family:'Cairo',sans-serif; font-size:1rem; font-weight:900; cursor:pointer; width:100%; }
-  /* ── Theme Switcher ── */
-  .theme-btn {
-    background:none; border:1.5px solid #444; color:var(--muted);
-    font-family:'Cairo',sans-serif; font-size:0.78rem; font-weight:700;
-    padding:6px 14px; border-radius:30px; cursor:pointer; transition:all .2s;
-  }
-  .theme-btn:hover { border-color:var(--green); color:var(--green); }
-  .theme-btn.active { background:var(--green); border-color:var(--green); color:#fff; }
-
-  /* ── Themes ── */
-  body.theme-light {
-    --green:#2d6a4f; --green-light:#52b788;
-    --gold:#d4a017; --gold-light:#f9c74f;
-    --bg:#f8f5f0; --white:#ffffff;
-    --text:#1a1a2e; --muted:#555;
-    --prayer-bg:#1a3a2a;
-    --shadow:0 4px 20px rgba(0,0,0,0.1);
-  }
-  body.theme-light .activity-name  { color:#1a1a2e !important; }
-  body.theme-light .activity-type  { color:#555 !important; }
-  body.theme-light .note-text      { color:#333 !important; }
-  body.theme-light .activity-time  { color:#2d6a4f !important; background:rgba(45,106,79,0.1) !important; }
-  body.theme-light .activity-time.flex { color:#d4a017 !important; background:rgba(212,160,23,0.1) !important; }
-  body.theme-light .activity-row:hover { background:#f0ede8; }
-  body.theme-light .activity-row.done  { background:#e8f5e9; }
-  body.theme-light .activity-row.done .activity-name { color:#999 !important; }
-  body.theme-light .t-عبادة  { color:#2d6a4f; } body.theme-light .t-دراسة  { color:#4361ee; }
-  body.theme-light .t-تمارين { color:#e63946; } body.theme-light .t-تطوير  { color:#f4831f; }
-  body.theme-light .t-راحة   { color:#888; }    body.theme-light .t-أكل    { color:#9b5de5; }
-  body.theme-light .t-استحمام{ color:#0096c7; }
-
-  body.theme-forest {
-    --green:#40916c; --green-light:#74c69d;
-    --gold:#e9c46a; --gold-light:#f4d35e;
-    --bg:#0f1f15; --white:#162312;
-    --text:#d8f3dc; --muted:#95c4a0;
-    --prayer-bg:#081810;
-    --shadow:0 4px 20px rgba(0,0,0,0.5);
-  }
-  body.theme-forest .activity-name { color:#d8f3dc !important; }
-  body.theme-forest .activity-type { color:#95c4a0 !important; }
-  body.theme-forest .note-text     { color:#b7dfc0 !important; }
-  body.theme-forest .activity-time { color:#74c69d !important; background:rgba(116,198,157,0.12) !important; }
-  body.theme-forest .activity-time.flex { color:#e9c46a !important; background:rgba(233,196,106,0.12) !important; }
-  body.theme-forest .activity-row:hover { background:#1a2f1e; }
-  body.theme-forest .activity-row.done  { background:#0f2014; opacity:.45; }
-  body.theme-forest .activity-row.done .activity-name { color:#4a7c52 !important; }
-
-  body.theme-ocean {
-    --green:#00b4d8; --green-light:#48cae4;
-    --gold:#f9c74f; --gold-light:#f9c74f;
-    --bg:#03045e; --white:#0d1b6e;
-    --text:#caf0f8; --muted:#90e0ef;
-    --prayer-bg:#020338;
-    --shadow:0 4px 20px rgba(0,0,0,0.5);
-  }
-  body.theme-ocean .activity-name { color:#caf0f8 !important; }
-  body.theme-ocean .activity-type { color:#90e0ef !important; }
-  body.theme-ocean .note-text     { color:#ade8f4 !important; }
-  body.theme-ocean .activity-time { color:#48cae4 !important; background:rgba(72,202,228,0.12) !important; }
-  body.theme-ocean .activity-time.flex { color:#f9c74f !important; background:rgba(249,199,79,0.12) !important; }
-  body.theme-ocean .activity-row:hover { background:#0a1580; }
-  body.theme-ocean .activity-row.done  { background:#060e50; opacity:.45; }
-  body.theme-ocean .activity-row.done .activity-name { color:#1a3a7a !important; }
 </style>
 </head>
 <body>
 
 <h1 class="page-title">جدول الدراسة <span>اليومي</span></h1>
 <p class="page-subtitle">منظم حسب أوقات الصلاة ✦</p>
-
-<!-- Theme Switcher -->
-<div style="max-width:720px;margin:0 auto 16px;display:flex;justify-content:center;gap:10px;">
-  <button onclick="setTheme('dark')"   id="th-dark"   class="theme-btn">🌙 Dark</button>
-  <button onclick="setTheme('light')"  id="th-light"  class="theme-btn">☀️ Light</button>
-  <button onclick="setTheme('forest')" id="th-forest" class="theme-btn">🌿 Forest</button>
-  <button onclick="setTheme('ocean')"  id="th-ocean"  class="theme-btn">🌊 Ocean</button>
-</div>
 
 <div id="yesterdayBanner"><span id="yesterdayText"></span></div>
 
