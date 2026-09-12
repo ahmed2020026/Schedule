@@ -8,12 +8,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   :root {
-    --green: #52b788; --green-light: #74c69d;
-    --gold: #f9c74f; --gold-light: #f9c74f;
-    --bg: #0d1117; --white: #161b22;
-    --text: #e6edf3; --muted: #8b949e;
-    --prayer-bg: #0a1628;
-    --shadow: 0 4px 20px rgba(0,0,0,0.4);
+    --green: #2d9d68; --green-light: #40b37c;
+    --gold: #c98a12; --gold-light: #f9c74f;
+    --bg: #f6f7f9; --white: #ffffff;
+    --text: #1b1f24; --muted: #6a7178;
+    --prayer-bg: #10151c;
+    --shadow: 0 4px 16px rgba(0,0,0,0.08);
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
@@ -38,7 +38,7 @@
   #chartPanel h3 { font-weight:900; color:var(--text); margin-bottom:16px; font-size:1rem; text-align:center; }
 
   /* progress */
-  .progress-wrap { max-width:720px; margin:0 auto 6px; background:#21262d; border-radius:30px; height:14px; overflow:hidden; }
+  .progress-wrap { max-width:720px; margin:0 auto 6px; background:#e3e6ea; border-radius:30px; height:14px; overflow:hidden; }
   .progress-bar { height:100%; background:linear-gradient(90deg,var(--green-light),var(--green)); border-radius:30px; transition:width .4s ease; width:0%; }
   .progress-label { text-align:center; font-size:0.82rem; font-weight:700; color:var(--muted); margin-bottom:28px; }
 
@@ -46,7 +46,7 @@
 
   /* prayer section */
   .prayer-section { margin-bottom:28px; border-radius:20px; overflow:hidden; box-shadow:var(--shadow); }
-  .prayer-header { background:var(--prayer-bg); padding:16px 22px; display:flex; align-items:center; justify-content:space-between; }
+  .prayer-header { background:linear-gradient(135deg,#1a3a2a,#2d6a4f); padding:16px 22px; display:flex; align-items:center; justify-content:space-between; }
   .prayer-header .right { display:flex; align-items:center; gap:12px; }
   .prayer-icon { font-size:1.8rem; }
   .prayer-name { font-size:1.3rem; font-weight:900; color:var(--gold-light); }
@@ -57,16 +57,16 @@
   .activity-row {
     display:flex; align-items:center; gap:12px;
     padding:13px 18px 13px 22px;
-    border-bottom:1px solid #21262d;
+    border-bottom:1px solid #eceef1;
     cursor:pointer;
     transition:background .2s, opacity .3s, transform .15s;
     user-select:none;
   }
   .activity-row:last-child { border-bottom:none; }
-  .activity-row:hover { background:#1c2128; }
+  .activity-row:hover { background:#f4f6f8; }
   .activity-row:active { transform:scale(0.985); }
-  .activity-row.done { opacity:.42; background:#1a2a1e; }
-  .activity-row.done .activity-name { text-decoration:line-through; color:#999; }
+  .activity-row.done { opacity:.55; background:#eef7f1; }
+  .activity-row.done .activity-name { text-decoration:line-through; color:#9aa0a6; }
 
   @keyframes pop {
     0%   { transform:scale(1); }
@@ -79,8 +79,8 @@
   .activity-info { flex:1; }
   .activity-name { font-size:0.95rem; font-weight:700; color:var(--text); margin-bottom:2px; }
   .activity-type { font-size:0.75rem; font-weight:600; color:var(--muted); }
-  .activity-time { min-width:90px; font-size:0.78rem; font-weight:700; color:var(--green); background:rgba(82,183,136,0.1); padding:3px 9px; border-radius:20px; text-align:center; white-space:nowrap; }
-  .activity-time.flex { background:rgba(212,160,23,0.12); color:var(--gold); }
+  .activity-time { min-width:90px; font-size:0.78rem; font-weight:700; color:var(--green); background:rgba(45,157,104,0.1); padding:3px 9px; border-radius:20px; text-align:center; white-space:nowrap; }
+  .activity-time.flex { background:rgba(201,138,18,0.12); color:var(--gold); }
   .lock-icon { font-size:1.35rem; flex-shrink:0; transition:transform .2s; }
   .activity-row:hover .lock-icon { transform:scale(1.15); }
 
@@ -89,28 +89,28 @@
   .t-تطوير  { color:#ffa657; } .t-راحة   { color:#8b949e; } .t-أكل    { color:#d2a8ff; }
   .t-استحمام{ color:#56d364; }
 
-  /* force dark text on all content */
-  .activity-name  { color:#e6edf3 !important; }
-  .activity-type  { color:#8b949e !important; }
-  .note-text      { color:#c9d1d9 !important; }
-  .activity-row.done .activity-name { color:#484f58 !important; }
-  .activity-time  { color:#56d364 !important; background:rgba(86,211,100,0.1) !important; }
-  .activity-time.flex { color:#f9c74f !important; background:rgba(249,199,79,0.1) !important; }
-  .lock-icon      { filter: brightness(1.2); }
+  /* force readable text on light background */
+  .activity-name  { color:#1b1f24 !important; }
+  .activity-type  { color:#6a7178 !important; }
+  .note-text      { color:#333a41 !important; }
+  .activity-row.done .activity-name { color:#9aa0a6 !important; }
+  .activity-time  { color:#22874e !important; background:rgba(34,135,78,0.1) !important; }
+  .activity-time.flex { color:#a3730d !important; background:rgba(163,115,13,0.1) !important; }
+  .lock-icon      { filter: none; }
 
   /* notes */
   .notes-section { background:var(--white); border-radius:20px; overflow:hidden; box-shadow:var(--shadow); margin-top:10px; }
   .notes-header { background:linear-gradient(135deg,#1a3a2a,#2d6a4f); padding:14px 22px; display:flex; align-items:center; gap:10px; }
   .notes-header h3 { color:var(--gold-light); font-size:1.1rem; font-weight:900; }
   .notes-body { padding:14px 22px; }
-  .note-item { display:flex; align-items:flex-start; gap:10px; padding:9px 0; border-bottom:1px solid #21262d; font-size:0.88rem; }
+  .note-item { display:flex; align-items:flex-start; gap:10px; padding:9px 0; border-bottom:1px solid #eceef1; font-size:0.88rem; }
   .note-item:last-child { border-bottom:none; }
   .note-icon { font-size:1.1rem; min-width:22px; }
   .note-text { color:var(--text); line-height:1.6; }
 
   /* clear btn */
   .clear-wrap { max-width:720px; margin:28px auto 0; text-align:center; }
-  .clear-btn { background:none; border:none; font-family:'Cairo',sans-serif; font-size:0.78rem; color:#ccc; cursor:pointer; text-decoration:underline; }
+  .clear-btn { background:none; border:none; font-family:'Cairo',sans-serif; font-size:0.78rem; color:#8a9099; cursor:pointer; text-decoration:underline; }
 
   /* popup */
   #resultPopup { display:none; position:fixed; inset:0; background:rgba(10,25,15,0.9); z-index:999; align-items:center; justify-content:center; padding:24px; }
@@ -506,8 +506,8 @@ function renderChart() {
       responsive: true,
       plugins: { legend:{display:false}, tooltip:{callbacks:{label:c=>c.raw+'%'}} },
       scales: {
-        y: { min:0, max:100, ticks:{callback:v=>v+'%', font:{family:'Cairo',size:11}, color:'#8b949e'}, grid:{color:'#21262d'} },
-        x: { ticks:{font:{family:'Cairo',size:12}, color:'#8b949e'}, grid:{display:false} }
+        y: { min:0, max:100, ticks:{callback:v=>v+'%', font:{family:'Cairo',size:11}, color:'#6a7178'}, grid:{color:'#e3e6ea'} },
+        x: { ticks:{font:{family:'Cairo',size:12}, color:'#6a7178'}, grid:{display:false} }
       }
     }
   });
